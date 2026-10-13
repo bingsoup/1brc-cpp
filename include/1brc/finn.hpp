@@ -5,8 +5,15 @@
 #include <iomanip>
 #include <fstream>
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
+
+struct station{
+    std::vector<float> data;
+    float min = 100.0f;
+    float max = -100.0f;
+};
 
 // Don't change signature of this function, feel free to change everything else
 inline void solution(const std::string& filename) {
@@ -16,10 +23,8 @@ inline void solution(const std::string& filename) {
         std::cerr << "Error opening file: " << filename << "\n";
         return;
     }
-    
-    std::map<std::string, std::vector<float>, std::less<std::string>> station_data{};
-    std::map<std::string, float> station_mins{};
-    std::map<std::string, float> station_maxs{};
+
+    std::unordered_map<std::string, station> stations{};
 
     std::string line;
     
@@ -32,15 +37,15 @@ inline void solution(const std::string& filename) {
 
         std::string station_name = line.substr(0, delimiter_pos);
         float temperature = std::stof(line.substr(delimiter_pos + 1));
-        station_data[station_name].push_back(temperature);
+        
+        station& curStation = stations[station_name];
 
-        if (station_mins.find(station_name) == station_mins.end() 
-            || temperature < station_mins[station_name]) {
-            station_mins[station_name] = temperature;
+        curStation.data.push_back(temperature);
+        if (temperature < curStation.min) {
+            curStation.min = temperature;
         }
-        if (station_maxs.find(station_name) == station_maxs.end() 
-            || temperature > station_maxs[station_name]) {
-            station_maxs[station_name] = temperature;
+        if (temperature > curStation.max) {
+            curStation.max = temperature;
         }
     }
 
@@ -53,13 +58,13 @@ inline void solution(const std::string& filename) {
         return;
     }
 
-    for (const auto& [station_name, temperatures] : station_data) {
+    for (const auto& [station_name, station_data] : stations) {
         float sum = 0.0f;
-        for (float temp : temperatures) {
+        for (float temp : station_data.data) {
             sum += temp;
         }
-        float average = sum / temperatures.size();
-        outputFile << std::fixed << std::setprecision(1) << station_name << ";" << station_mins[station_name] << ";" << average << ";" << station_maxs[station_name] << "\n";
+        float average = sum / station_data.data.size();
+        outputFile << std::fixed << std::setprecision(1) << station_name << ";" << station_data.min << ";" << average << ";" << station_data.max << "\n";
     }
 
 }
