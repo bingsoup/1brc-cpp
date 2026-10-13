@@ -13,7 +13,7 @@ inline void solution(const std::string& filename) {
     std::ifstream inputFile(filename);
 
     if (!inputFile.is_open()) {
-        std::cerr << "Error opening file \n";
+        std::cerr << "Error opening file: " << filename << "\n";
         return;
     }
     
@@ -34,10 +34,12 @@ inline void solution(const std::string& filename) {
         float temperature = std::stof(line.substr(delimiter_pos + 1));
         station_data[station_name].push_back(temperature);
 
-        if (station_mins.find(station_name) == station_mins.end() || temperature < station_mins[station_name]) {
+        if (station_mins.find(station_name) == station_mins.end() 
+            || temperature < station_mins[station_name]) {
             station_mins[station_name] = temperature;
         }
-        if (station_maxs.find(station_name) == station_maxs.end() || temperature > station_maxs[station_name]) {
+        if (station_maxs.find(station_name) == station_maxs.end() 
+            || temperature > station_maxs[station_name]) {
             station_maxs[station_name] = temperature;
         }
     }
@@ -59,6 +61,6 @@ inline void solution(const std::string& filename) {
         float average = sum / temperatures.size();
         outputFile << std::fixed << std::setprecision(1) << station_name << ";" << station_mins[station_name] << ";" << average << ";" << station_maxs[station_name] << "\n";
     }
-}
 
-#endif OBRC_USERNAME_HPP
+}
+#endif
