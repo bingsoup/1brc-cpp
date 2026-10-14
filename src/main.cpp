@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 #include <chrono>
 
 #include "1brc/finn.hpp"
@@ -25,9 +24,13 @@ int main(int argc, char *argv[]) {
         const auto endTime = std::chrono::high_resolution_clock::now();
         const auto ms = 
             std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+        const auto s =
+            std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
 
         std::cout << "Time taken:\n" 
-            << ms.count() << " milliseconds\n";
+            << ms.count() << " milliseconds\n"
+            << s.count() << " seconds\n";
+            
 
         runNum++;
     }

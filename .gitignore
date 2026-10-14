@@ -34,8 +34,7 @@ build/
 cmake-build-debug/
 cmake-build-release/
 [Bb][Uu][Ii][Ll][Dd]/
-measurements.txt
-output.txt
+*.txt
 
 # Secret Files
 .idea/
