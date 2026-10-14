@@ -14,7 +14,17 @@ struct station{
     int elements = 0;
 };
 
-using uMap = std::unordered_map<std::string, station>;
+struct stringhash {
+    using is_transparent = void; // promise it's valid for uMap
+
+    size_t operator()(std::string_view str)
+    const noexcept{
+        return std::hash<std::string_view>{}(str);
+    }
+};
+
+//using uMap = ankerl::unordered_dense::map<std::string, station>;
+using uMap = std::unordered_map<std::string, station, stringhash, std::equal_to<>>;
 
 inline void processLine(const std::string& line, uMap& results){
     size_t delimiter_pos = line.find(';');
@@ -23,17 +33,29 @@ inline void processLine(const std::string& line, uMap& results){
             return;
     }
 
-    std::string station_name = line.substr(0, delimiter_pos);
-    std::string number = line.substr(delimiter_pos +1);
-    number.erase(number.find("."),1);
-    int temperature;
+    std::string_view station_name(line.data(), delimiter_pos);
+    std::string_view number(
+        line.data() + delimiter_pos + 1,
+        line.size() - delimiter_pos - 1
+    );
+    
+    int whole;
     auto [ptr, ec] = std::from_chars(
         number.data(),
         number.data() + number.size(),
-        temperature
+        whole
     );
+
+    int decimal = ptr[1] - '0';
+
+    int temperature = whole * 10 + (number.front() == '-' ? -decimal : decimal);
+
+    auto it = results.find(station_name);
+    if (it == results.end()){
+        it = results.try_emplace(std::string(station_name)).first;
+    }
     
-    station& curStation = results[station_name];
+    station& curStation = it->second;
 
     curStation.elements++;
 
@@ -90,7 +112,10 @@ inline void solution(const std::string& filename) {
 
     uMap stations1{};
     uMap stations2{};
+    stations1.max_load_factor(0.5f);
+    stations2.max_load_factor(0.5f);
     stations1.reserve(413);
+    stations2.reserve(413);
     std::vector<std::string> keys;
 
     std::string line;
