@@ -40,24 +40,24 @@ There are 413 unique station names, from which the one billion rows are generate
 ## Memory profiling:
 - sequential:
     - Threaded:
-        - anon 1169051648
-        - file 988078080
-        - file_mapped 345305088
-        - inactive_file 950587392
-        - active_file 37449728
+        - anon 1234841600
+        - file 1583509504
+        - file_mapped 552513536
+        - inactive_file 1516609536
+        - active_file 66895872
     - Single:
-        - anon 1173135360
-        - file 1056276480
-        - file_mapped 376180736
-        - inactive_file 980787200
-        - active_file 75485184
+        - anon 1218920448
+        - file 1662898176
+        - file_mapped 572837888
+        - inactive_file 1527496704
+        - active_file 135397376
 - normal:
     - Single:
-        - anon 1176948736
-        - file 3928973312
-        - file_mapped 2597371904
-        - inactive_file 1330642944
-        - active_file 2598326272
+        - anon 1247891456
+        - file 3457163264
+        - file_mapped 2324066304
+        - inactive_file 1435684864
+        - active_file 2021474304
 
 ## Submission
 1. Create a fork of this repository on your own GitHub profile. This will let you submit your solution via a pull request.
