@@ -37,6 +37,28 @@ The computation must happen during runtime, it is against the rules to process t
 
 There are 413 unique station names, from which the one billion rows are generated. Solutions should not rely on any specifics of a given data set, as any valid station name as per the above listed constraints and any data distribution (number of measurements per station) must be supported.
 
+## Memory profiling:
+- sequential:
+    - Threaded:
+        - anon 1169051648
+        - file 988078080
+        - file_mapped 345305088
+        - inactive_file 950587392
+        - active_file 37449728
+    - Single:
+        - anon 1173135360
+        - file 1056276480
+        - file_mapped 376180736
+        - inactive_file 980787200
+        - active_file 75485184
+- normal:
+    - Single:
+        - anon 1176948736
+        - file 3928973312
+        - file_mapped 2597371904
+        - inactive_file 1330642944
+        - active_file 2598326272
+
 ## Submission
 1. Create a fork of this repository on your own GitHub profile. This will let you submit your solution via a pull request.
 
