@@ -89,6 +89,8 @@ inline void processChunk(
 inline void solution(const std::string& filename) {
     int fd = open(filename.c_str(), O_RDONLY);
 
+    posix_fadvise(fd, 0, 0, POSIX_FADV_SEQUENTIAL);
+
     struct stat info{};
 
     if (fstat(fd, &info) == -1) {
