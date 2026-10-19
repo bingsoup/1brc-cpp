@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 
-#include "1brc/finn-mmap.hpp"
+#include "1brc/finn.hpp"
 
 int main(int argc, char *argv[]) {
     std::string path = "measurements.txt";

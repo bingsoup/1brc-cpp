@@ -10,7 +10,7 @@ add_executable(${PROJECT_NAME}
 
 add_executable(solution 
     src/main.cpp
-    "include/1brc/finn-mmap.hpp"
+    "include/1brc/finn.hpp"
 )
 
 target_include_directories(solution
